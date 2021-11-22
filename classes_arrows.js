@@ -3,13 +3,15 @@
 suma = ((a,b) => a + b)(5,4);  
 console.log(suma);
 
+
 //N2.1.Crea una arrow function que, rebent un paràmetre, retorni un objecte amb un atribut que tingui com a valor el paràmetre rebut.
 
-((estacion)=>{
-    const objecte = estacion
-    console.log(objecte)
-  
-})("Primavera");   
+const estaciones = estacion => obj = {
+   nombre:estacion
+    };
+
+console.log(estaciones("primavera"));
+
 
 
 /*N2.2.Crea una classe Persona que rebi un paràmetre 'nom' al ser instanciada. 
@@ -31,25 +33,34 @@ alumno.dirNom();
 //N3.Escriu una function creadora d'objectes que faci instàncies d'una classe abstracta. Invoca-la amb diferents definicions.
 
 
-function Alumno(apellido) {
-    this.apellido = apellido;
-  }
-  
-  Alumno.prototype.escribeApellido = function() {
-    console.log ("El apellido es:" + this.apellido);
-  };
-  
-  var alumno1 = new Alumno("Sanchez");
-  var alumno2 = new Alumno("Linares");
-  
-  
-  const escribir = () => alumno1.escribeApellido();
-  
-  alumno1.escribeApellido();                           
-  alumno2.escribeApellido();                           
-  escribir();                             
-                                                
-  console.log(escribir === alumno1.escribeApellido);
-  console.log(escribir===Alumno.prototype.escribeApellido);
+class perro {
+    constructor (nombre, edad, color){
+        this.nombre=nombre;
+        this.edad=edad;
+        this.color=color;
+        if(this.constructor == perro){
+			throw new Error(" Object of Abstract Class cannot be created");
+			}	
+    }
+    datos(){
+		console.log(`DATOS DEL PERRO:
+    nombre: ${this.nombre}
+    edad: ${this.edad}
+    color:${this.color}`);
+	}
+}
 
-  escribir.call(alumno1); 
+function crearBDPerro(_nombre,_edad,_color){
+    return Object.create(perro.prototype, {
+		"nombre" : {value: _nombre},
+		"edad":{value: _edad},
+		"color":{value: _color}
+	});
+}
+
+perro1 = crearBDPerro("txiki",1,"marrón");
+perro1.datos();
+
+perro2 = crearBDPerro("neu",3,"blanco con manchas negras");
+perro2.datos();
+
