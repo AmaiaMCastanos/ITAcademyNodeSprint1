@@ -10,9 +10,8 @@ user("amaia");
 
 
 /*N2.1.Mostra per consola el nom i cognoms de l'usuari mitjançant template literals,
- guardant-los en variables i referenciant-les en la impressió del missatge.
- En el N2 E1 tienes que hacer log de una template literal que referencie las variables, no guardar template literals en las variables*/
-
+ guardant-los en variables i referenciant-les en la impressió del missatge.*/
+ 
 var nom="Amaia"
 var cognoms= "Muñoz Castaños"
 console.log(`${nom} ${cognoms}`);
