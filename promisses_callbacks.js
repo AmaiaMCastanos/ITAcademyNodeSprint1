@@ -13,107 +13,107 @@ myAsyncfunction (7,8).catch((e) => console.log(e))
 
 
 /*1.2.Crea una arrow function que rebi un paràmetre i una funció callback 
-i li passi a la funció un missatge o un altre (que s'imprimirà per consola) en funció del paràmetre rebut.*/ 
+i li passi a la funció un missatge o un altre (que s'imprimirà per consola) en funció del paràmetre rebut.*/
 
 
-const myCallback = (nombre, callback) => {
-    console.log(`${nombre},`)
-    callback();
-};
+const cb = (message) => {
+    console.log(message)
+}
 
-function nombreRandom() {
-    var codi = Math.floor(Math.random()*20);
-    if (codi>6) {
-        return console.log(`El seu codi d'accès es: ${codi}`)
-    }   else {
-        return console.log(`El seu codi d'accès es massa gran, si us plau, torna-ho a intentar: ${codi}`)
-    }
-};
-nombreRandom('Pepa', nombreRandom);
+const funcionCreada = (x, cb) => {
+    let cbMessage = x ? "El argumento es true" : "El argumento es false"
+    cb(cbMessage)
+}
 
+funcionCreada(true, cb)
+funcionCreada(false, cb)
+
+
+/*2.1.Donats els objectes employees i salaries,
+crea una arrow function getEmployee que retorni una Promise efectuant la cerca en l'objecte pel seu id. */
+
+
+let employees = [{
+    id: 1,
+    name: 'Linux Torvalds'
+}, {
+    id: 2,
+     name: 'Bill Gates'
+},{
+    id: 3,
+    name: 'Jeff Bezos'
+}];
+
+        
+let salaries = [{
+    id: 1,
+    salary: 4000
+}, {
+    id: 2,
+    salary: 1000
+}, {
+    id: 3,
+    salary: 2000
+}]; 
+
+
+var id = Math.floor(Math.random()*5);
+
+
+const getEmployee = (id) => new Promise((resolve, reject)=>{
+    let trobaemployee = employees.find(treballador => treballador.id === id);
+        if (trobaemployee) {
+            resolve (trobaemployee)
+        }   else {
+            reject ('El treballador no es troba a la base de dades')
+        }
+});
+
+
+getEmployee(id).then((message) => { 
+    console.log(message);
+    })
+    .catch((message) => { 
+    console.log(message);
+    });
+
+//*2.2. Crea una altra arrow function getSalary que rebi com a paràmetre un objecte employee i retorni el seu salari.
+
+
+
+const getSalary = (employee) => {
+    return new Promise((resolve, reject) => {
+
+        const trobaSalari = salaries.find(element => element.id === employee.id);
+
+        if (trobaSalari) {
+            resolve(trobaSalari.salary)
+        } else {
+            reject(new Error('El treballador no es troba a la base de dades'))
+        }
+    })
+
+}
+
+getSalary(employees[2])
+    .then((message) => { 
+    console.log(message);
+    })
+    .catch((message) => { 
+    console.log(message);
+    });
+    
+
+
+
+//2.3.Invoca la primera funció getEmployee i després getSalary niant l'execució de les dues promises.
+
+
+    getEmployee(3)
+    .then(employee => getSalary(employee))
+    .then(encadenados => console.log("Resultado del encadenamiento: ", encadenados))
+    .catch(e => console.log(e))
 
 
 //3.1.Fixa un element catch a la invocació del nivell anterior que capturi qualsevol error i el mostri per la consola.
 
-try {
-
-
-    /*2.1.Donats els objectes employees i salaries,
-    crea una arrow function getEmployee que retorni una Promise efectuant la cerca en l'objecte pel seu id. */
-
-
-    let employees = [{
-        id: 1,
-        name: 'Linux Torvalds'
-    }, {
-        id: 2,
-        name: 'Bill Gates'
-    },{
-        id: 3,
-        name: 'Jeff Bezos'
-    }];
-    
-    let salaries = [{
-        id: 1,
-        salary: 4000
-    }, {
-        id: 2,
-        salary: 1000
-    }, {
-        id: 3,
-        salary: 2000
-    }]; 
-
-    var id = Math.floor(Math.random()*5);; 
-
-
-    const getEmployee = (id) => new Promise((resolve, reject)=>{
-            let trobaemployee = employees.find(treballador => treballador.id === id);
-            if (trobaemployee) {
-                resolve (trobaemployee)
-            }   else {
-                reject ('El treballador no es troba a la base de dades')
-            }
-        });
-
-
-    getEmployee(id).then((message) => { 
-        console.log(message);
-    })
-    .catch((message) => { 
-        console.log(message);
-    });
-
-    /*2.2. Crea una altra arrow function getSalary que rebi com a paràmetre un objecte employee i retorni el seu salari.
-    */
-
-    const getSalary = (id) =>new Promise ( (resolve,reject)=>{
-        let trobaSalary = salaries.find(treballador => treballador.id === id);
-        if (trobaSalary) {
-            resolve (trobaSalary)
-        }   else {
-            reject ('El treballador no es troba a la base de dades')
-        }
-    });;
-
-    getSalary(id).then((message) => { 
-        console.log(message);
-    })
-    .catch((message) => { 
-        console.log(message);
-    });
-
-    //2.3.Invoca la primera funció getEmployee i després getSalary niant l'execució de les dues promises.
-
-    Promise.all([getEmployee(id), getSalary(id)]).then(message => {
-        console.log(message);
-    }, message => {
-        console.log(message)
-    });
-
-    alertDeCatch("patata")
-    }
-    
-  catch(err) {
-    console.log(err.message);
-  }
